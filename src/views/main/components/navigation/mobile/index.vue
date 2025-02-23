@@ -6,7 +6,9 @@
     >
       <!-- 面包屑 svg图标 -->
       <li 
-        class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white shadow-l-white">
+        class="z-20 fixed top-0 right-[-1px] h-4 px-1 flex items-center bg-white shadow-l-white"
+        @click="isOpenPopup = !isOpenPopup"
+      >
         <m-svg-icon class=" w-1.5 h-1.5" name="hamburger"></m-svg-icon>
       </li>
       <!-- slider滑块，文字的背景板 -->
@@ -32,6 +34,9 @@
       </li>
       
     </ul>
+    <m-popup v-model="isOpenPopup">
+      <div>测试弹窗内容</div>
+    </m-popup>
   </div>
 </template>
 
@@ -47,8 +52,8 @@ const props = defineProps({
 })
 //滑块的style
 const sliderStyle = ref({
-  transform: 'translateX(0px)',
-  width: '60px'
+  transform: 'translateX(0px) translateY(-3px)',
+  width: '52px'
 })
 // 选中的item的下标
 const currentCategoryIndex = ref(0)
@@ -73,7 +78,7 @@ watch(currentCategoryIndex, (currentIndex) => {
   const val = itemRefs[currentIndex]
   const {width, left} = val.getBoundingClientRect()
   sliderStyle.value = {
-    transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
+    transform: `translateX(${ulScrollLeft.value + left - 10}px) translateY(-3px)`,
     width: `${width}px`
   }
 })
@@ -81,6 +86,9 @@ const onItemClick = (index) => {
   console.log('index is ', index)
   currentCategoryIndex.value = index
 }
+
+// 控制popup
+const isOpenPopup = ref(false)
 </script>
 
 <style lang="scss" scoped>
