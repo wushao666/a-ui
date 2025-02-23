@@ -4,15 +4,15 @@
       <!-- 蒙版/遮罩层 -->
       <transition name="fade">
         <div
-          v-if="modelValue"
+          v-if="isOpen"
           class="w-screen h-screen bg-zinc-900/80 z-40 fixed top-0 left-0"
-          @click="emits('update:modelValue', false)"
+          @click="isOpen = false"
         ></div>
       </transition>
       <!-- 内容区 -->
       <transition name="popup-down-up">
         <div
-          v-if="modelValue"
+          v-if="isOpen"
           v-bind="$attrs"
           class=" w-screen bg-white z-50 fixed bottom-0"
         >
@@ -26,6 +26,7 @@
 <script setup>
 import { watch } from "vue";
 import { useScrollLock } from "@vueuse/core";
+import { useVModel } from "@vueuse/core";
 
 const props = defineProps({
   modelValue: {
@@ -33,13 +34,16 @@ const props = defineProps({
     required: true,
   },
 });
-const emits = defineEmits(["update:modelValue"]);
-
+// const emits = defineEmits(["update:modelValue"]);
+// 不需要主动触发了
+const isOpen = useVModel(props)
 // 滚动锁定
 const isLocked = useScrollLock(document.body);
 // 监听传入的值，来处理是否锁定
 watch(
-  () => props.modelValue,
+  // () => props.modelValue,
+  // 直接监听isOpen就行
+  () => isOpen,
   (val) => {
     isLocked.value = val;
   },
