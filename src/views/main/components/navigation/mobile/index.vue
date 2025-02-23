@@ -35,7 +35,7 @@
       
     </ul>
     <m-popup v-model="isOpenPopup">
-      <div>测试弹窗内容</div>
+      <menu-vue :categories="data" @onItemClick="onItemClick"></menu-vue>
     </m-popup>
   </div>
 </template>
@@ -43,6 +43,7 @@
 <script setup>
 import { ref, watch, onBeforeUpdate } from "vue";
 import { useScroll } from "@vueuse/core";
+import MenuVue from "../../menu/index.vue";
 
 const props = defineProps({
   data: {
@@ -85,6 +86,7 @@ watch(currentCategoryIndex, (currentIndex) => {
 const onItemClick = (index) => {
   console.log('index is ', index)
   currentCategoryIndex.value = index
+  isOpenPopup.value = false
 }
 
 // 控制popup
