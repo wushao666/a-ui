@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
+        // 第一个值表示字体大小，第二个值表示行高
         xs: ['0.25rem', '0.35rem'],
         sm: ['0.35rem', '0.45rem'],
         base: ['0.45rem', '0.55rem'],
